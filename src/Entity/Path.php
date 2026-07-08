@@ -23,7 +23,7 @@ class Path
     private ?\DateTime $endDate = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $diaryPrice = null;
+    private ?float $dischargePrice = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $waitingPrice = null;
@@ -33,9 +33,6 @@ class Path
 
     #[ORM\ManyToOne(inversedBy: 'paths')]
     private ?Driver $driver = null;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?User $Driver = null;
 
     #[ORM\ManyToOne(inversedBy: 'paths')]
     private ?Trailer $trailer = null;
@@ -83,12 +80,12 @@ class Path
 
     public function getDiaryPrice(): ?float
     {
-        return $this->diaryPrice;
+        return $this->dischargePrice;
     }
 
-    public function setDiaryPrice(?float $diaryPrice): static
+    public function setDischargePrice(?float $dischargePrice): static
     {
-        $this->diaryPrice = $diaryPrice;
+        $this->dischargePrice = $dischargePrice;
 
         return $this;
     }
