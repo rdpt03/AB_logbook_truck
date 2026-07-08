@@ -78,7 +78,7 @@ class Path
         return $this;
     }
 
-    public function getDiaryPrice(): ?float
+    public function getDischargePrice(): ?float
     {
         return $this->dischargePrice;
     }
