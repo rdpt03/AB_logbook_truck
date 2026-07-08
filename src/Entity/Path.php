@@ -28,6 +28,18 @@ class Path
     #[ORM\Column(nullable: true)]
     private ?float $waitingPrice = null;
 
+    #[ORM\ManyToOne(inversedBy: 'paths')]
+    private ?Truck $truck = null;
+
+    #[ORM\ManyToOne(inversedBy: 'paths')]
+    private ?Driver $driver = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?User $Driver = null;
+
+    #[ORM\ManyToOne(inversedBy: 'paths')]
+    private ?Trailer $trailer = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +101,42 @@ class Path
     public function setWaitingPrice(?float $waitingPrice): static
     {
         $this->waitingPrice = $waitingPrice;
+
+        return $this;
+    }
+
+    public function getTruck(): ?Truck
+    {
+        return $this->truck;
+    }
+
+    public function setTruck(?Truck $truck): static
+    {
+        $this->truck = $truck;
+
+        return $this;
+    }
+
+    public function getDriver(): ?Driver
+    {
+        return $this->driver;
+    }
+
+    public function setDriver(?Driver $driver): static
+    {
+        $this->driver = $driver;
+
+        return $this;
+    }
+
+    public function getTrailer(): ?Trailer
+    {
+        return $this->trailer;
+    }
+
+    public function setTrailer(?Trailer $trailer): static
+    {
+        $this->trailer = $trailer;
 
         return $this;
     }

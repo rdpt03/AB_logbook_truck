@@ -2,29 +2,26 @@
 
 namespace App\Entity;
 
-use App\Repository\TruckRepository;
+use App\Repository\TrailerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TruckRepository::class)]
-class Truck
+#[ORM\Entity(repositoryClass: TrailerRepository::class)]
+class Trailer
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $truckPlate = null;
-
-    #[ORM\Column(length: 30)]
-    private ?string $truckNumber = null;
+    #[ORM\Column(length: 20)]
+    private ?string $trailerPlate = null;
 
     /**
      * @var Collection<int, Path>
      */
-    #[ORM\OneToMany(targetEntity: Path::class, mappedBy: 'truck')]
+    #[ORM\OneToMany(targetEntity: Path::class, mappedBy: 'trailer')]
     private Collection $paths;
 
     public function __construct()
@@ -37,26 +34,14 @@ class Truck
         return $this->id;
     }
 
-    public function getTruckPlate(): ?string
+    public function getTrailerPlate(): ?string
     {
-        return $this->truckPlate;
+        return $this->trailerPlate;
     }
 
-    public function setTruckPlate(string $truckPlate): static
+    public function setTrailerPlate(string $trailerPlate): static
     {
-        $this->truckPlate = $truckPlate;
-
-        return $this;
-    }
-
-    public function getTruckNumber(): ?string
-    {
-        return $this->truckNumber;
-    }
-
-    public function setTruckNumber(string $truckNumber): static
-    {
-        $this->truckNumber = $truckNumber;
+        $this->trailerPlate = $trailerPlate;
 
         return $this;
     }
@@ -73,7 +58,7 @@ class Truck
     {
         if (!$this->paths->contains($path)) {
             $this->paths->add($path);
-            $path->setTruck($this);
+            $path->setTrailer($this);
         }
 
         return $this;
@@ -83,8 +68,8 @@ class Truck
     {
         if ($this->paths->removeElement($path)) {
             // set the owning side to null (unless already changed)
-            if ($path->getTruck() === $this) {
-                $path->setTruck(null);
+            if ($path->getTrailer() === $this) {
+                $path->setTrailer(null);
             }
         }
 

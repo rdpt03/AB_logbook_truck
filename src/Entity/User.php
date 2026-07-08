@@ -33,6 +33,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Driver $driver = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -101,5 +104,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
+    }
+
+    public function getDriver(): ?Driver
+    {
+        return $this->driver;
+    }
+
+    public function setDriver(?Driver $driver): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($driver === null && $this->driver !== null) {
+            $this->driver->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($driver !== null && $driver->getUser() !== $this) {
+            $driver->setUser($this);
+        }
+
+        $this->driver = $driver;
+
+        return $this;
     }
 }
