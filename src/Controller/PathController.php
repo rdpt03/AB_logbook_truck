@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Path;
+use App\Entity\User;
 use App\Form\PathFormType;
 use App\Repository\PathRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,6 +19,14 @@ class PathController extends AbstractController
     #[Route('/', name: 'path_index')]
     public function index(PathRepository $pathRepository): Response
     {
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if(!$user){
+            return $this->redirectToRoute('app_login');
+        }
+
         return $this->render('path/index.html.twig', [
             'paths' => $pathRepository->findAll(),
         ]);
