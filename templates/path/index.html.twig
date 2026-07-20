@@ -134,14 +134,6 @@
                             </a>
                         </td>
                     </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="10" class="text-center">
-
-                            Nenhum trajeto encontrado
-
-                        </td>
-                    </tr>
                 {% endfor %}
                 </tbody>
             </table>
@@ -177,7 +169,8 @@ $(document).ready(function () {
 
 
         language: {
-            url: "https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-PT.json"
+            url: "https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-PT.json",
+            emptyTable: "Nenhum trajeto registado"
         },
 
 
