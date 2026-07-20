@@ -1,0 +1,335 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Trajetos
+{% endblock %}
+
+
+{% block stylesheets %}
+{{ parent() }}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.min.css">
+
+
+<style>
+
+    table.datatable thead th {
+        background-color: #0d6efd;
+        color: white;
+        text-align: center;
+    }
+
+
+    table.datatable tbody td {
+        vertical-align: middle;
+    }
+
+
+    .dt-search input {
+        border-radius: 8px;
+        padding: 6px 12px;
+        border: 1px solid #ced4da;
+    }
+
+
+    .dt-length select {
+        border-radius: 8px;
+        padding: 5px;
+    }
+
+
+    .dt-paging .dt-paging-button {
+        border-radius: 8px !important;
+        margin: 2px;
+    }
+
+
+    .dataTables_wrapper {
+        padding-top: 10px;
+    }
+
+
+    .datatable td,
+    .datatable th {
+        white-space: nowrap;
+    }
+
+
+</style>
+
+{% endblock %}
+
+
+
+{% block body %}
+
+<div class="container mt-5">
+
+
+    <div class="d-flex justify-content-between mb-3">
+
+
+        <h2>
+            Lista de trajetos
+        </h2>
+
+
+        <a href="{{ path('path_new') }}" class="btn btn-primary">
+            Novo trajeto
+        </a>
+
+
+    </div>
+
+
+
+
+    <div class="card shadow">
+
+
+        <div class="card-body">
+
+
+            <table class="table table-striped table-hover datatable">
+
+
+                <thead>
+
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Trajeto</th>
+
+                        <th>Data início</th>
+
+                        <th>Data fim</th>
+
+                        <th>Preço diário</th>
+
+                        <th>Preço espera</th>
+
+                        <th>Camião</th>
+
+                        <th>Motorista</th>
+
+                        <th>Reboque</th>
+
+                        <th>Ações</th>
+
+                    </tr>
+
+
+                </thead>
+
+
+
+                <tbody>
+
+
+                {% for path in paths %}
+
+
+                    <tr>
+
+
+                        <td>
+                            {{ path.id }}
+                        </td>
+
+
+                        <td>
+                            {{ path.path }}
+                        </td>
+
+
+                        <td>
+                            {{ path.startingDate ? path.startingDate|date('d/m/Y') : '-' }}
+                        </td>
+
+
+                        <td>
+                            {{ path.endDate ? path.endDate|date('d/m/Y') : '-' }}
+                        </td>
+
+
+                        <td>
+                            {{ path.dischargePrice }} €
+                        </td>
+
+
+                        <td>
+                            {{ path.waitingPrice }} €
+                        </td>
+
+
+                        <td>
+                            {{ path.truck ? path.truck.id : '-' }}
+                        </td>
+
+
+                        <td>
+                            {{ path.driver ? path.driver.id : '-' }}
+                        </td>
+
+
+                        <td>
+                            {{ path.trailer ? path.trailer.id : '-' }}
+                        </td>
+
+
+
+                        <td>
+
+
+                            <a href="{{ path('path_edit', {id:path.id}) }}"
+                               class="btn btn-warning btn-sm">
+
+                                Editar
+
+                            </a>
+
+
+
+                            <a href="{{ path('path_delete', {id:path.id}) }}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Tem a certeza que pretende eliminar este trajeto?')">
+
+                                Eliminar
+
+                            </a>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                {% else %}
+
+
+                    <tr>
+
+                        <td colspan="10" class="text-center">
+
+                            Nenhum trajeto encontrado
+
+                        </td>
+
+                    </tr>
+
+
+                {% endfor %}
+
+
+
+                </tbody>
+
+
+
+            </table>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+</div>
+
+
+
+{% endblock %}
+
+
+
+
+
+{% block javascripts %}
+
+{{ parent() }}
+
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+
+
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
+
+
+
+
+<script>
+
+
+$(document).ready(function () {
+
+
+    $('.datatable').DataTable({
+
+
+        pageLength: 10,
+
+
+        responsive: true,
+
+
+        ordering: true,
+
+
+        searching: true,
+
+
+
+        lengthMenu: [
+
+            [10, 25, 50, -1],
+
+            [10, 25, 50, "Todos"]
+
+        ],
+
+
+
+        language: {
+
+            url: "https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-PT.json"
+
+        },
+
+
+
+        columnDefs: [
+
+            {
+
+                targets: -1,
+
+                orderable: false
+
+            }
+
+        ]
+
+
+    });
+
+
+
+});
+
+
+</script>
+
+
+
+{% endblock %}
