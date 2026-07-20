@@ -117,10 +117,10 @@
                             {{ path.waitingPrice }} €
                         </td>
                         <td>
-                            {{ path.truck ? path.truck.id : '-' }}
+                            {{ path.truck ? (path.truck.truckPlate ~ ' | ' ~ path.truck.truckNumber) : '-' }}
                         </td>
                         <td>
-                            {{ path.trailer ? path.trailer.id : '-' }}
+                            {{ path.trailer ? path.trailer.trailerPlate : '-' }}
                         </td>
                         <td>
                             <a href="{{ path('path_edit', {id:path.id}) }}"
