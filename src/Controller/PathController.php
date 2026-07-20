@@ -18,7 +18,6 @@ class PathController extends AbstractController
     #[Route('/', name: 'path_index')]
     public function index(PathRepository $pathRepository): Response
     {
-        echo "debug : ";var_dump($this->getUser());
         return $this->render('path/index.html.twig', [
             'paths' => $pathRepository->findAll(),
         ]);
