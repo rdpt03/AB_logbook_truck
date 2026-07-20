@@ -28,7 +28,7 @@ class PathController extends AbstractController
         }
 
         return $this->render('path/index.html.twig', [
-            'paths' => $pathRepository->findAll(),
+            'paths' => $user->getDriver()->getPaths(),
         ]);
 
     }
